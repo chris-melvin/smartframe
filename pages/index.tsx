@@ -1,11 +1,31 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { useState } from "react";
 
 export default function Home() {
+  const [image, setImage] = useState();
+  const [prompt, setPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentPrompt, setCurrentPrompt] = useState("");
+
+  // post request to the generateImage api
+  const generateImage = async () => {
+    setIsLoading(true);
+    const res = await fetch("/api/generateImage", {
+      method: "POST",
+      body: JSON.stringify({ prompt }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const { data } = await res.json();
+    setIsLoading(false);
+    setImage(data[0].url);
+    setCurrentPrompt(prompt);
+    setPrompt("");
+  };
+
   return (
     <>
       <Head>
@@ -17,8 +37,39 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1 className="text-lg">Smart Frame</h1>
+
+      <main className="flex justify-center items-center min-h-screen bg-zinc-200">
+        <section className="m-3">
+          {!image ? (
+            <h1 className="text-center text-2xl text-slate-800">
+              Generate an image with a prompt
+            </h1>
+          ) : (
+            <h1 className="text-center text-2xl text-slate-700">
+              {currentPrompt}
+            </h1>
+          )}
+          <div className="max-w-2xl">
+            {image ? <img src={image} alt="" /> : null}
+          </div>
+          <div className="mt-4 w-full">
+            <input
+              className="border border-gray-400 rounded-md p-3 w-full mr-1 "
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+            />
+            <button
+              className={`bg-blue-400 w-full text-white p-3 rounded-md mt-2 ${
+                prompt === "" || isLoading ? "opacity-50" : ""
+              }`}
+              onClick={generateImage}
+              disabled={prompt === "" || isLoading}
+            >
+              Generate
+            </button>
+          </div>
+        </section>
       </main>
     </>
   );
