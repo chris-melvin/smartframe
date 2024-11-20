@@ -21,14 +21,15 @@ const AboutPage = () => {
 
           <p className="text-lg text-gray-700">
             This project is an AI-powered image generation tool that leverages
-            OpenAI's DALL-E API to create unique images from text descriptions.
+            OpenAI&apos;s DALL-E API to create unique images from text
+            descriptions.
           </p>
 
           <p className="text-gray-600">
-            Built as an exploration of OpenAI's capabilities, this application
-            demonstrates the potential of AI in creative processes. Users can
-            input text prompts and receive AI-generated images that match their
-            descriptions.
+            Built as an exploration of OpenAI&apos;s capabilities, this
+            application demonstrates the potential of AI in creative processes.
+            Users can input text prompts and receive AI-generated images that
+            match their descriptions.
           </p>
 
           <div className="space-y-2">
