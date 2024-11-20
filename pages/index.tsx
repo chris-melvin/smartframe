@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   const [image, setImage] = useState();
@@ -50,6 +51,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Navbar />
       <main className="flex justify-center items-center  bg-gradient-to-b from-zinc-100 to-zinc-200">
         <section className="m-3 w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
           <AnimatePresence mode="wait">
@@ -64,7 +66,7 @@ export default function Home() {
             </motion.h1>
           </AnimatePresence>
 
-          <div className="relative aspect-square w-full mb-6 bg-gray-50 rounded-lg overflow-hidden">
+          <div className="relative w-full mb-6 bg-gray-50 rounded-lg overflow-hidden aspect-video">
             <AnimatePresence mode="wait">
               {isLoading && (
                 <motion.div
